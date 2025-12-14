@@ -1,0 +1,111 @@
+--CW01 
+CREATE TABLE Employee (
+    EmployeeID INT,
+    FirstName VARCHAR(20),
+    LastName VARCHAR(20),
+    Department VARCHAR(20),
+    Salary INT,
+    Age INT
+);
+
+
+
+--CW02
+ALTER TABLE Employee ADD Address VARCHAR(50);
+
+
+
+--CW03 (nhi hua yeh online sql compiler par run)
+ALTER TABLE Employee MODIFY Salary DECIMAL;
+
+
+
+--CW04
+INSERT INTO Employee VALUES
+(101, 'John', 'Doe', 'Sales', 45000, 30, 'Delhi');
+
+INSERT INTO Employee VALUES
+(102, 'Jane', 'Smith', 'HR', 50000, 28, 'Mumbai');
+
+INSERT INTO Employee VALUES
+(123, 'Mike', 'Brown', 'IT', 55000, 35, 'Pune');
+
+INSERT INTO Employee VALUES
+(104, 'Emily', 'Davis', 'Sales', 48000, 26, 'Chennai');
+
+INSERT INTO Employee VALUES
+(456, 'Robert', 'Wilson', 'Finance', 60000, 40, 'Bangalore');
+
+
+
+--CW05
+UPDATE Employee
+SET Salary = 60000
+WHERE EmployeeID = 123;
+
+
+
+--CW06
+DELETE FROM Employee
+WHERE EmployeeID = 456;
+
+
+
+--CW07
+SELECT * FROM Employee;
+
+
+
+
+--CW08
+SELECT FirstName, LastName
+FROM Employee
+WHERE Department = 'Sales';
+
+
+
+
+--CW09
+SELECT Salary FROM Employee;
+
+
+
+
+--CW10
+SELECT FirstName, LastName, Age
+FROM Employee;
+
+
+
+
+--CW11
+SELECT FirstName, LastName, Salary
+FROM Employee;
+
+
+
+
+--CW12
+ALTER TABLE Employee
+RENAME COLUMN Address TO Location;
+
+
+
+
+--CW13
+ALTER TABLE Employee
+DROP COLUMN Location;
+
+
+
+
+--CW14
+DELETE FROM Employee;
+
+
+
+
+
+
+
+
