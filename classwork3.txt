@@ -1,0 +1,61 @@
+--CW00
+-- Insert dummy employees
+INSERT INTO Employees VALUES
+(101, 'John', 'Doe', 1, 45000.00);
+
+INSERT INTO Employees VALUES
+(102, 'Jane', 'Smith', 2, 50000.00);
+
+INSERT INTO Employees VALUES
+(103, 'Mike', 'Brown', 3, 55000.00);
+
+INSERT INTO Employees VALUES
+(104, 'Emily', 'Davis', 2, 48000.00);
+
+INSERT INTO Employees VALUES
+(105, 'Robert', 'Wilson', 1, 60000.00);
+
+
+
+
+
+--CW01
+SELECT COUNT(*) AS TotalEmployees
+FROM Employees;
+
+
+
+--CW02
+SELECT AVG(Salary) AS AverageSalary
+FROM Employees;
+
+
+
+--CW03
+SELECT MAX(Salary) AS MaxSalary
+FROM Employees;
+
+
+
+--CW04
+SELECT MIN(Salary) AS MinSalary
+FROM Employees;
+
+
+
+--CW05
+SELECT UPPER(FirstName) AS FirstName_Upper,
+       UPPER(LastName) AS LastName_Upper
+FROM Employees;
+
+
+
+--CW06
+SELECT FirstName, LENGTH(FirstName) AS FirstName_Length
+FROM Employees;
+
+
+
+--CW07
+SELECT CONCAT(FirstName, ' ', LastName) AS FullName
+FROM Employees;
