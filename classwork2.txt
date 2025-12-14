@@ -1,0 +1,87 @@
+--CW01
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,                 
+    FirstName VARCHAR(50) NOT NULL,              
+    LastName VARCHAR(50) NOT NULL,               
+    Department INT,                             
+    Salary DECIMAL(10,2) CHECK (Salary > 0)      
+);
+
+
+
+--CW02
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY,                
+    DepartmentName VARCHAR(50) UNIQUE NOT NULL  
+);
+
+
+
+--CW03
+ALTER TABLE Employees
+ADD CONSTRAINT FK_Department
+FOREIGN KEY (Department)
+REFERENCES Departments(DepartmentID);
+
+
+
+--CW04
+-- This will FAIL because department 99 does not exist
+INSERT INTO Employees VALUES
+(101, 'John', 'Doe', 99, 45000.00);
+
+
+
+--CW06
+INSERT INTO Departments VALUES
+(1, 'HR');
+
+INSERT INTO Departments VALUES
+(2, 'Sales');
+
+INSERT INTO Departments VALUES
+(3, 'IT');
+
+
+
+--CW05
+INSERT INTO Employees VALUES
+(101, 'John', 'Doe', 1, 45000.00);
+
+INSERT INTO Employees VALUES
+(102, 'Jane', 'Smith', 2, 50000.00);
+
+INSERT INTO Employees VALUES
+(103, 'Mike', 'Brown', 3, 55000.00);
+
+INSERT INTO Employees VALUES
+(104, 'Emily', 'Davis', 2, 48000.00);
+
+INSERT INTO Employees VALUES
+(105, 'Robert', 'Wilson', 1, 60000.00);
+
+
+
+--CW07
+UPDATE Employees
+SET Salary = 58000.00
+WHERE EmployeeID = 103;
+
+
+
+--CW08
+-- Delete a department (no orphan records)
+-- First delete employees of that department
+DELETE FROM Employees
+WHERE Department = 3;
+
+-- Then delete the department
+DELETE FROM Departments
+WHERE DepartmentID = 3;
+
+
+
+--CW09
+-- Retrieve first and last names of all employees
+SELECT FirstName, LastName
+FROM Employees;
