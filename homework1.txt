@@ -1,0 +1,96 @@
+--HW01
+CREATE TABLE Books (
+    BookID INT,
+    Title VARCHAR(100),
+    Author VARCHAR(100),
+    Price DECIMAL(10,2),
+    PublishYear INT
+);
+
+
+
+--HW02
+ALTER TABLE Books ADD PublicationYear INT;
+
+
+
+--HW03
+ALTER TABLE Books MODIFY Price DECIMAL;
+
+
+
+--HW04
+INSERT INTO Books VALUES
+(101, 'The Alchemist', 'Paulo Coelho', 25.50, 2018, 2018);
+
+INSERT INTO Books VALUES
+(102, 'Atomic Habits', 'James Clear', 28.00, 2020, 2020);
+
+INSERT INTO Books VALUES
+(123, 'Clean Code', 'Robert C. Martin', 35.00, 2019, 2019);
+
+INSERT INTO Books VALUES
+(104, 'Think Like a Monk', 'Jay Shetty', 22.75, 2020, 2020);
+
+INSERT INTO Books VALUES
+(456, 'Rich Dad Poor Dad', 'Robert Kiyosaki', 30.00, 2017, 2017);
+
+
+
+--HW05
+UPDATE Books
+SET Price = 30.00
+WHERE BookID = 123;
+
+
+
+--HW06
+DELETE FROM Books
+WHERE BookID = 456;
+
+
+
+--HW07
+SELECT * FROM Books;
+
+
+
+--HW08
+SELECT Title
+FROM Books
+WHERE PublishYear = 2020;
+
+
+
+--HW09
+SELECT Price
+FROM Books;
+
+
+
+--HW10
+SELECT Title, Author, PublishYear
+FROM Books;
+
+
+
+--HW11
+SELECT Title, Price
+FROM Books;
+
+
+
+--HW12
+ALTER TABLE Books
+RENAME COLUMN Author TO BookAuthor;
+
+
+
+--HW13
+ALTER TABLE Books
+DROP COLUMN PublicationYear;
+
+
+
+--HW14
+DELETE FROM Books;
