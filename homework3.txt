@@ -1,0 +1,61 @@
+--HW00
+INSERT INTO Products VALUES
+(101, 'Laptop', 55000.00, 1);
+
+INSERT INTO Products VALUES
+(102, 'Smartphone', 30000.00, 1);
+
+INSERT INTO Products VALUES
+(103, 'Novel', 500.00, 2);
+
+INSERT INTO Products VALUES
+(104, 'T-Shirt', 800.00, 3);
+
+INSERT INTO Products VALUES
+(105, 'Jeans', 1500.00, 3);
+
+
+
+
+
+
+--HW01
+SELECT COUNT(*) AS TotalProducts
+FROM Products;
+
+
+
+--HW02
+SELECT AVG(Price) AS AveragePrice
+FROM Products;
+
+
+
+--HW03
+SELECT MAX(Price) AS MaxPrice
+FROM Products;
+
+
+
+--HW04
+SELECT MIN(Price) AS MinPrice
+FROM Products;
+
+
+
+--HW05
+SELECT UPPER(ProductName) AS ProductName_Upper
+FROM Products;
+
+
+
+--HW06
+SELECT ProductName, LENGTH(ProductName) AS ProductName_Length
+FROM Products;
+
+
+
+--HW07
+SELECT CONCAT(P.ProductName, ' ', C.CategoryName) AS ProductWithCategory
+FROM Products P;
+
