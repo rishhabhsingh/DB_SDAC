@@ -1,0 +1,146 @@
+--HW01
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,                
+    ProductName VARCHAR(100) NOT NULL,          
+    Price DECIMAL(10,2) CHECK (Price > 0),      
+    CategoryID INT                             
+);
+
+
+
+--HW02
+CREATE TABLE Categories (
+    CategoryID INT PRIMARY KEY,                
+    CategoryName VARCHAR(50) UNIQUE NOT NULL  
+);
+
+
+
+--HW03
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,                 
+    CustomerID INT NOT NULL,
+    OrderDate DATE NOT NULL
+);
+
+
+
+--HW04
+CREATE TABLE OrderDetails (
+    OrderDetailID INT PRIMARY KEY,             
+    OrderID INT,
+    ProductID INT,
+    Quantity INT CHECK (Quantity > 0) 
+);
+
+
+
+--HW05
+ALTER TABLE Products
+ADD CONSTRAINT FK_Product_Category
+FOREIGN KEY (CategoryID)
+REFERENCES Categories(CategoryID);
+
+
+
+--HW06
+ALTER TABLE OrderDetails
+ADD CONSTRAINT FK_OrderDetails_Order
+FOREIGN KEY (OrderID)
+REFERENCES Orders(OrderID);
+
+ALTER TABLE OrderDetails
+ADD CONSTRAINT FK_OrderDetails_Product
+FOREIGN KEY (ProductID)
+REFERENCES Products(ProductID);
+
+
+
+--HW07
+INSERT INTO Categories VALUES
+(1, 'Electronics');
+
+INSERT INTO Categories VALUES
+(2, 'Books');
+
+INSERT INTO Categories VALUES
+(3, 'Clothing');
+
+
+
+--HW08
+INSERT INTO Products VALUES
+(101, 'Laptop', 55000.00, 1);
+
+INSERT INTO Products VALUES
+(102, 'Smartphone', 30000.00, 1);
+
+INSERT INTO Products VALUES
+(103, 'Novel', 500.00, 2);
+
+INSERT INTO Products VALUES
+(104, 'T-Shirt', 800.00, 3);
+
+INSERT INTO Products VALUES
+(105, 'Jeans', 1500.00, 3);
+
+
+
+--HW09
+INSERT INTO Orders VALUES
+(201, 1, '2024-01-10');
+
+INSERT INTO Orders VALUES
+(202, 2, '2024-01-11');
+
+INSERT INTO Orders VALUES
+(203, 3, '2024-01-12');
+
+
+
+--HW10
+INSERT INTO OrderDetails VALUES
+(1, 201, 101, 1);
+
+INSERT INTO OrderDetails VALUES
+(2, 201, 103, 2);
+
+INSERT INTO OrderDetails VALUES
+(3, 202, 104, 3);
+
+INSERT INTO OrderDetails VALUES
+(4, 203, 102, 1);
+
+
+
+--HW11
+-- This will FAIL (CategoryID 99 does not exist)
+INSERT INTO Products VALUES
+(106, 'Tablet', 20000.00, 99);
+
+
+
+--HW12
+UPDATE Products
+SET Price = 52000.00
+WHERE ProductID = 101;
+
+
+
+--HW13
+-- Delete a category (no orphan products)
+-- First delete products of that category
+DELETE FROM Products
+WHERE CategoryID = 2;
+
+-- Then delete the category
+DELETE FROM Categories
+WHERE CategoryID = 2;
+
+
+
+--HW14
+SELECT P.ProductName, C.CategoryName
+FROM Products P
+JOIN Categories C
+ON P.CategoryID = C.CategoryID;
