@@ -17,6 +17,22 @@ BEGIN
 END;
 /
 
+CREATE PROCEDURE add_employee2
+AS
+BEGIN
+    INSERT INTO employees
+    VALUES (2, 'Jane Smith', 'Developer', 'IT');
+
+    DBMS_OUTPUT.PUT_LINE('Second employee added');
+END;
+/
+
+BEGIN
+    add_employee2;
+END;
+/
+
+
 --8
 CREATE PROCEDURE update_employee
 AS
