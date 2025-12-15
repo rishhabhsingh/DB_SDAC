@@ -1,0 +1,68 @@
+create table products1(product_id NUMBER, product_name VARCHAR2(50), price NUMBER,category VARCHAR2(50));
+
+--6
+CREATE PROCEDURE add_product
+AS
+BEGIN
+    INSERT INTO products1
+    VALUES (101, 'Laptop', 800, 'Electronics');
+
+    DBMS_OUTPUT.PUT_LINE('Product added');
+END;
+/
+
+--7
+BEGIN
+    add_product;
+END;
+/
+
+CREATE PROCEDURE add_product2
+AS
+BEGIN
+    INSERT INTO products1
+    VALUES (102, 'Chair', 50, 'Furniture');
+
+    DBMS_OUTPUT.PUT_LINE('Second product added');
+END;
+/
+
+BEGIN
+    add_product2;
+END;
+/
+
+--8
+CREATE PROCEDURE update_product
+AS
+BEGIN
+    UPDATE products1
+    SET price = 750,
+        category = 'Office Electronics'
+    WHERE product_id = 101;
+
+    DBMS_OUTPUT.PUT_LINE('Product updated');
+END;
+/
+
+--9
+BEGIN
+    update_product;
+END;
+/
+
+--10
+CREATE PROCEDURE delete_product1
+AS
+BEGIN
+    DELETE FROM products1
+    WHERE product_id = 102;
+
+    DBMS_OUTPUT.PUT_LINE('Product deleted');
+END;
+/
+
+BEGIN
+    delete_product1;
+END;
+/
