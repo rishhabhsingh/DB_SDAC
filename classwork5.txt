@@ -1,0 +1,57 @@
+create table employees1( employee_id NUMBER, employee_name VARCHAR2(50), job_title VARCHAR2(50), department VARCHAR2(50));
+
+--6
+CREATE PROCEDURE add_employee1
+AS
+BEGIN
+    INSERT INTO employees1
+    VALUES (1, 'John Doe', 'Manager', 'HR');
+
+    DBMS_OUTPUT.PUT_LINE('Employee added');
+END;
+/
+
+--7
+BEGIN
+    add_employee1;
+END;
+/
+
+--8
+CREATE PROCEDURE update_employee
+AS
+BEGIN
+    UPDATE employees1
+    SET job_title = 'Senior Developer',
+        department = 'Software'
+    WHERE employee_id = 2;
+
+    DBMS_OUTPUT.PUT_LINE('Employee updated');
+END;
+/
+
+--9
+BEGIN
+    update_employee;
+END;
+/
+
+--10
+CREATE PROCEDURE delete_employee1
+AS
+BEGIN
+    DELETE FROM employees1
+    WHERE employee_id = 1;
+
+    DBMS_OUTPUT.PUT_LINE('Employee deleted');
+END;
+/
+BEGIN
+    delete_employee1;
+END;
+/
+
+
+
+
+
