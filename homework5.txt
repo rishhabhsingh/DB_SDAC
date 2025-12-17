@@ -1,68 +1,52 @@
 create table products1(product_id NUMBER, product_name VARCHAR2(50), price NUMBER,category VARCHAR2(50));
 
 --6
-CREATE PROCEDURE add_product
+CREATE OR REPLACE PROCEDURE add_product (p_product_id   IN NUMBER, p_product_name IN VARCHAR2, p_price IN NUMBER, p_category IN VARCHAR2)
 AS
 BEGIN
     INSERT INTO products1
-    VALUES (101, 'Laptop', 800, 'Electronics');
-
+    VALUES (p_product_id, p_product_name, p_price, p_category);
     DBMS_OUTPUT.PUT_LINE('Product added');
 END;
 /
 
 --7
 BEGIN
-    add_product;
-END;
-/
-
-CREATE PROCEDURE add_product2
-AS
-BEGIN
-    INSERT INTO products1
-    VALUES (102, 'Chair', 50, 'Furniture');
-
-    DBMS_OUTPUT.PUT_LINE('Second product added');
-END;
-/
-
-BEGIN
-    add_product2;
+    add_product(101, 'Laptop', 800, 'Electronics');
+    add_product(102, 'Chair', 50, 'Furniture');
 END;
 /
 
 --8
-CREATE PROCEDURE update_product
+CREATE OR REPLACE PROCEDURE update_product (p_product_id IN NUMBER, p_price IN NUMBER, p_category IN VARCHAR2)
 AS
 BEGIN
     UPDATE products1
-    SET price = 750,
-        category = 'Office Electronics'
-    WHERE product_id = 101;
-
+    SET price = p_price,
+        category = p_category
+    WHERE product_id = p_product_id;
     DBMS_OUTPUT.PUT_LINE('Product updated');
 END;
 /
 
 --9
 BEGIN
-    update_product;
+    update_product(101, 750, 'Office Electronics');
 END;
 /
 
 --10
-CREATE PROCEDURE delete_product1
+CREATE OR REPLACE PROCEDURE delete_product1 (p_product_id IN NUMBER)
 AS
 BEGIN
     DELETE FROM products1
-    WHERE product_id = 102;
-
+    WHERE product_id = p_product_id;
     DBMS_OUTPUT.PUT_LINE('Product deleted');
 END;
 /
 
 BEGIN
-    delete_product1;
+    delete_product1(102);
 END;
 /
+
