@@ -1,71 +1,55 @@
-create table employees1( employee_id NUMBER, employee_name VARCHAR2(50), job_title VARCHAR2(50), department VARCHAR2(50));
+CREATE TABLE employees1 (employee_id NUMBER, employee_name VARCHAR2(50), job_title VARCHAR2(50), department VARCHAR2(50));
 
 --6
-CREATE PROCEDURE add_employee1
+CREATE OR REPLACE PROCEDURE add_employee1 (p_employee_id IN NUMBER, p_employee_name IN VARCHAR2, p_job_title IN VARCHAR2, p_department IN VARCHAR2)
 AS
 BEGIN
     INSERT INTO employees1
-    VALUES (1, 'John Doe', 'Manager', 'HR');
-
+    VALUES (p_employee_id, p_employee_name, p_job_title, p_department);
     DBMS_OUTPUT.PUT_LINE('Employee added');
 END;
 /
 
 --7
 BEGIN
-    add_employee1;
+    add_employee1(1, 'John Doe', 'Manager', 'HR');
+    add_employee1(2, 'Jane Smith', 'Developer', 'IT');
 END;
 /
-
-CREATE PROCEDURE add_employee2
-AS
-BEGIN
-    INSERT INTO employees
-    VALUES (2, 'Jane Smith', 'Developer', 'IT');
-
-    DBMS_OUTPUT.PUT_LINE('Second employee added');
-END;
-/
-
-BEGIN
-    add_employee2;
-END;
-/
-
 
 --8
-CREATE PROCEDURE update_employee
+CREATE OR REPLACE PROCEDURE update_employee (p_employee_id IN NUMBER, p_job_title IN VARCHAR2, p_department IN VARCHAR2)
 AS
 BEGIN
     UPDATE employees1
-    SET job_title = 'Senior Developer',
-        department = 'Software'
-    WHERE employee_id = 2;
-
+    SET job_title = p_job_title,
+        department = p_department
+    WHERE employee_id = p_employee_id;
     DBMS_OUTPUT.PUT_LINE('Employee updated');
 END;
 /
 
 --9
 BEGIN
-    update_employee;
+    update_employee(2, 'Senior Developer', 'Software');
 END;
 /
 
 --10
-CREATE PROCEDURE delete_employee1
+CREATE OR REPLACE PROCEDURE delete_employee1 (p_employee_id IN NUMBER)
 AS
 BEGIN
     DELETE FROM employees1
-    WHERE employee_id = 1;
-
+    WHERE employee_id = p_employee_id;
     DBMS_OUTPUT.PUT_LINE('Employee deleted');
 END;
 /
+
 BEGIN
-    delete_employee1;
+    delete_employee1(1);
 END;
 /
+
 
 
 
