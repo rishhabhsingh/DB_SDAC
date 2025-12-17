@@ -59,3 +59,45 @@ FROM Employees;
 --CW07
 SELECT CONCAT(FirstName, ' ', LastName) AS FullName
 FROM Employees;
+
+
+
+--CW08
+SELECT * FROM Employees ORDER BY salary DESC FETCH FIRST 5 ROWS ONLY;
+
+
+
+--CW09
+SELECT department_id, SUM(salary) AS total_salary FROM Employees GROUP BY department_id;
+
+
+
+--CW10
+SELECT department_id, AVG(salary) AS avg_salary FROM Employees GROUP BY department_id ORDER BY avg_salary DESC FETCH FIRST 1 ROW ONLY;
+
+
+
+--CW11
+SELECT department_id, COUNT(*) AS employee_count FROM Employees GROUP BY department_id HAVING COUNT(*) > 10;
+
+
+
+--CW12
+SELECT department_id, MIN(salary) AS min_salary, MAX(salary) AS max_salary FROM Employees GROUP BY department_id;
+
+
+
+--CW13
+SELECT * FROM Employees ORDER BY last_name;
+
+
+
+--CW14
+SELECT department_id, AVG(salary) AS avg_salary FROM Employees GROUP BY department_id HAVING AVG(salary) > 60000;
+
+
+
+--CW15
+SELECT * FROM Employees ORDER BY salary DESC;
+
+
