@@ -1,3 +1,46 @@
+CREATE TABLE Categories ( CategoryID INT PRIMARY KEY, CategoryName VARCHAR(50));
+
+CREATE TABLE Products (ProductID INT PRIMARY KEY,ProductName VARCHAR(50),CategoryID INT);
+
+INSERT INTO Categories VALUES
+(1, 'Electronics'),
+(2, 'Clothing'),
+(3, 'Books');
+
+INSERT INTO Products VALUES
+(201, 'Laptop', 1),
+(202, 'Smartphone', 1),
+(203, 'T-Shirt', 2),
+(204, 'Notebook', NULL);
+
+--1
+SELECT * FROM Products p
+INNER JOIN Categories c
+ON p.ProductID = c.CategoryID;
+
+--2
+SELECT * FROM Categories c
+LEFT JOIN Products p
+ON c.CategoryID = p.ProductID;
+
+--3
+SELECT * FROM Categories c
+RIGHT JOIN Products p
+ON p.ProductID = c.CategoryID;
+
+--4
+SELECT * FROM Products p
+FULL OUTER JOIN Categories c
+ON p.ProductID = c.CategoryID;
+
+--5
+CREATE TABLE Customers (CustomerID INT PRIMARY KEY,CustomerName VARCHAR(50));
+CREATE TABLE Orders (OrderID INT PRIMARY KEY,CustomerID INT);
+
+SELECT * FROM Orders o
+LEFT JOIN Customers c
+ON o.OrderID = c.CustomerID;
+
 create table products1(product_id NUMBER, product_name VARCHAR2(50), price NUMBER,category VARCHAR2(50));
 
 --6
