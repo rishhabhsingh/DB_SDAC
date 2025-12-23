@@ -1,3 +1,46 @@
+CREATE TABLE Departments ( DepartmentID INT PRIMARY KEY, DepartmentName VARCHAR(50));
+
+CREATE TABLE Employees (EmployeeID INT PRIMARY KEY, EmployeeName VARCHAR(50), DepartmentID INT, ManagerID INT);
+
+INSERT INTO Departments VALUES
+(1, 'HR'),
+(2, 'IT'),
+(3, 'Finance'),
+(4, 'Marketing');
+
+INSERT INTO Employees VALUES
+(101, 'Alice', 1, NULL),
+(102, 'Bob', 2, 101),
+(103, 'Charlie', 2, 101),
+(104, 'Diana', 3, NULL),
+(105, 'Evan', NULL, 102);
+
+--1
+SELECT * FROM Employees e
+INNER JOIN Departments d
+ON e.EmployeeID = d.DepartmentID;
+
+--2
+SELECT * FROM Departments d
+LEFT JOIN Employees e
+ON d.DepartmentID = e.EmployeeID;
+
+--3
+SELECT *  FROM Departments d
+RIGHT JOIN Employees e
+ON e.EmployeeID = d.DepartmentID;
+
+--4
+SELECT * FROM Employees e
+FULL OUTER JOIN Departments d
+ON e.EmployeeID = d.DepartmentID;
+
+--5
+SELECT e.EmployeeName AS Employee, m.EmployeeName AS Manager
+FROM Employees e
+INNER JOIN Employees m
+ON e.ManagerID = m.EmployeeID;
+
 CREATE TABLE employees1 (employee_id NUMBER, employee_name VARCHAR2(50), job_title VARCHAR2(50), department VARCHAR2(50));
 
 --6
