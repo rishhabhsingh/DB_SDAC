@@ -1,0 +1,38 @@
+CREATE TABLE Products (ProductID INT PRIMARY KEY,ProductName VARCHAR(100),Price DECIMAL(10,2));
+
+CREATE TABLE BackupProducts (ProductID INT, ProductName VARCHAR(100), Price DECIMAL(10,2));
+
+CREATE TABLE ProductHistory (HistoryID INT AUTO_INCREMENT PRIMARY KEY, ProductID INT, ProductName VARCHAR(100),nOldPrice DECIMAL(10,2), UpdatedAt DATETIME);
+
+CREATE TABLE DeletedProducts (ProductID INT, ProductName VARCHAR(100), Price DECIMAL(10,2));
+
+CREATE TABLE PriceUpdates (UpdateID INT AUTO_INCREMENT PRIMARY KEY, ProductID INT, OldPrice DECIMAL(10,2), NewPrice DECIMAL(10,2), UpdateTimestamp DATETIME);
+
+--1
+CREATE OR REPLACE TRIGGER backup_product_after_insert
+AFTER INSERT ON Products
+FOR EACH ROW
+INSERT INTO BackupProducts VALUES (NEW.ProductID, NEW.ProductName, NEW.Price);
+
+--2
+CREATE OR REPLACE TRIGGER product_before_update
+BEFORE UPDATE ON Products
+FOR EACH ROW
+INSERT INTO ProductHistory VALUES (OLD.ProductID, OLD.ProductName, OLD.Price, NOW());
+
+--3
+CREATE OR REPLACE TRIGGER product_before_delete
+BEFORE DELETE ON Products
+FOR EACH ROW
+INSERT INTO DeletedProducts VALUES (OLD.ProductID, OLD.ProductName, OLD.Price);
+
+--4
+CREATE OR REPLACE TRIGGER MonitorHighPrices
+AFTER UPDATE ON Products
+FOR EACH ROW
+BEGIN
+    IF NEW.Price > 1000 THEN
+        INSERT INTO PriceUpdates VALUES (NEW.ProductID, OLD.Price, NEW.Price, NOW());
+    END IF;
+END;
+
