@@ -1,3 +1,13 @@
+--1
+SELECT * FROM Employees WHERE DepartmentID = (SELECT DepartmentID FROM Departments WHERE DepartmentName = 'Sales');
+
+--2
+SELECT SUM(Salary) AS TotalSalary FROM Employees WHERE DepartmentID = (SELECT DepartmentID FROM Departments WHERE DepartmentName = 'HR');
+
+--3
+SELECT * FROM Employees WHERE Salary = (SELECT MAX(Salary) FROM Employees);
+
+--Triggers
 CREATE TABLE Employees (EmployeeID INT PRIMARY KEY, Name VARCHAR(100), DepartmentID INT, Salary DECIMAL(10,2));
 
 CREATE TABLE BackupEmployees (EmployeeID INT, Name VARCHAR(100), DepartmentID INT,Salary DECIMAL(10,2));
