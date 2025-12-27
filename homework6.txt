@@ -1,3 +1,13 @@
+--1
+SELECT * FROM Products WHERE CategoryID = (SELECT CategoryID FROM Categories WHERE CategoryName = 'Electronics');
+
+--2
+SELECT SUM(QuantitySold) AS TotalQuantitySold FROM Sales WHERE ProductID IN (SELECT ProductID FROM Products WHERE CategoryID = ( SELECT CategoryID FROM Categories  WHERE CategoryName = 'Clothing'));
+
+--3
+SELECT * FROM Products WHERE Price = (SELECT MAX(Price) FROM Products);
+
+--Triggers
 CREATE TABLE Products (ProductID INT PRIMARY KEY,ProductName VARCHAR(100),Price DECIMAL(10,2));
 
 CREATE TABLE BackupProducts (ProductID INT, ProductName VARCHAR(100), Price DECIMAL(10,2));
