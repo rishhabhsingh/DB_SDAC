@@ -1,0 +1,172 @@
+--1
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,                 
+    FirstName VARCHAR(50) NOT NULL,              
+    LastName VARCHAR(50) NOT NULL,               
+    Department INT,                             
+    Salary DECIMAL(10,2))      
+);
+
+--2
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY,                
+    DepartmentName VARCHAR(50) UNIQUE NOT NULL  
+);
+
+--3
+ALTER TABLE Employees
+ADD CONSTRAINT FK_Department
+FOREIGN KEY (Department)
+REFERENCES Departments(DepartmentID);
+
+--4
+-- This will FAIL because department 99 does not exist
+INSERT INTO Employees VALUES
+(101, 'John', 'Doe', 99, 45000.00);
+
+--5
+INSERT INTO Employees VALUES
+(101, 'John', 'Doe', 1, 45000.00);
+
+INSERT INTO Employees VALUES
+(102, 'Jane', 'Smith', 2, 50000.00);
+
+INSERT INTO Employees VALUES
+(103, 'Mike', 'Brown', 3, 55000.00);
+
+INSERT INTO Employees VALUES
+(104, 'Emily', 'Davis', 2, 48000.00);
+
+INSERT INTO Employees VALUES
+(105, 'Robert', 'Wilson', 1, 60000.00);
+
+--6
+INSERT INTO Departments VALUES
+(1, 'HR');
+
+INSERT INTO Departments VALUES
+(2, 'Sales');
+
+INSERT INTO Departments VALUES
+(3, 'IT');
+
+--7
+UPDATE Employees
+SET Salary = 58000.00
+WHERE EmployeeID = 103;
+
+--8
+-- Delete a department (no orphan records)
+-- First delete employees of that department
+DELETE FROM Employees
+WHERE Department = 3;
+
+-- Then delete the department
+DELETE FROM Departments
+WHERE DepartmentID = 3;
+
+--9
+-- Retrieve first and last names of all employees
+SELECT FirstName, LastName
+FROM Employees;
+
+--10
+SELECT COUNT(*) AS TotalEmployees
+FROM Employees;
+
+--11
+SELECT AVG(Salary) AS AverageSalary
+FROM Employees;
+
+--12
+SELECT MAX(Salary) AS MaxSalary
+FROM Employees;
+
+--13
+SELECT MIN(Salary) AS MinSalary
+FROM Employees;
+
+--14
+SELECT UPPER(FirstName) AS FirstName_Upper,
+       UPPER(LastName) AS LastName_Upper
+FROM Employees;
+
+--15
+SELECT CONCAT(FirstName, ' ', LastName) AS FullName
+FROM Employees;
+
+--16
+SELECT * FROM Employees ORDER BY salary DESC FETCH FIRST 5 ROWS ONLY;
+
+--17
+SELECT department_id, SUM(salary) AS total_salary FROM Employees GROUP BY department_id;
+
+--18
+SELECT department_id, AVG(salary) AS avg_salary FROM Employees GROUP BY department_id ORDER BY avg_salary DESC FETCH FIRST 1 ROW ONLY;
+
+--19
+SELECT department_id, COUNT(*) AS employee_count FROM Employees GROUP BY department_id HAVING COUNT(*) > 10;
+
+--20
+SELECT department_id, MIN(salary) AS min_salary, MAX(salary) AS max_salary FROM Employees GROUP BY department_id;
+
+--21
+SELECT * FROM Departments d
+LEFT JOIN Employees e
+ON d.DepartmentID = e.EmployeeID;
+
+--22
+SELECT * FROM Employees e
+INNER JOIN Departments d
+ON e.EmployeeID = d.DepartmentID;
+
+--23
+CREATE OR REPLACE PROCEDURE update_employee (p_employee_id IN NUMBER, p_job_title IN VARCHAR2, p_department IN VARCHAR2)
+AS
+BEGIN
+    UPDATE employees1
+    SET job_title = p_job_title,
+        department = p_department
+    WHERE employee_id = p_employee_id;
+    DBMS_OUTPUT.PUT_LINE('Employee updated');
+END;
+/
+
+--24
+BEGIN
+    update_employee(2, 'Senior Developer', 'Software');
+END;
+/
+
+--25
+SELECT SUM(Salary) AS TotalSalary FROM Employees WHERE DepartmentID = (SELECT DepartmentID FROM Departments WHERE DepartmentName = 'HR');
+
+--26
+SELECT * FROM Employees WHERE Salary = (SELECT MAX(Salary) FROM Employees);
+
+--27
+CREATE TABLE BackupEmployees (EmployeeID INT, Name VARCHAR(100), DepartmentID INT,Salary DECIMAL(10,2));
+CREATE OR REPLACE TRIGGER backup_employee_after_insert
+AFTER INSERT ON Employees
+FOR EACH ROW
+INSERT INTO BackupEmployees VALUES (NEW.EmployeeID, NEW.Name, NEW.DepartmentID, NEW.Salary);
+
+--28
+CREATE TABLE EmployeeHistory (HistoryID INT AUTO_INCREMENT PRIMARY KEY, EmployeeID INT, Name VARCHAR(100), DepartmentID INT, OldSalary DECIMAL(10,2), UpdatedAt DATETIME);
+CREATE OR REPLACE TRIGGER employee_before_update
+BEFORE UPDATE ON Employees
+FOR EACH ROW
+INSERT INTO EmployeeHistory VALUES (OLD.EmployeeID, OLD.Name, OLD.DepartmentID, OLD.Salary, NOW());
+
+--29
+CREATE TABLE SalaryUpdates (UpdateID INT AUTO_INCREMENT PRIMARY KEY, EmployeeID INT, OldSalary DECIMAL(10,2), NewSalary DECIMAL(10,2), UpdateTimestamp DATETIME);
+CREATE OR REPLACE TRIGGER monitorhighsalaries
+AFTER UPDATE ON Employees
+FOR EACH ROW
+BEGIN
+    IF NEW.Salary > 100000 THEN
+        INSERT INTO SalaryUpdates VALUES (NEW.EmployeeID, OLD.Salary, NEW.Salary, NOW());
+    END IF;
+END;
+
+--30
